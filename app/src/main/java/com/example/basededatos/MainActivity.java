@@ -86,4 +86,30 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    // Método para elimiar un producto
+    public void Eliminar(View view){
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,"administracion", null, 1);
+        SQLiteDatabase BaseDeDatos = admin.getWritableDatabase();
+
+        String codigo = et_codigo.getText().toString();
+
+        if(!codigo.isEmpty()){
+            int cantidad = BaseDeDatos.delete("articulos", "codigo=" + codigo, null);
+            BaseDeDatos.close();
+
+            et_codigo.setText("");
+            et_descripcion.setText("");
+            et_precio.setText("");
+
+            if(cantidad == 1){
+                Toast.makeText(this, "El artículo se ha borrado correctamente", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, "El artículo no existe", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(this, "Debes introducir el artículo del código", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
