@@ -112,4 +112,41 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Método para modificar artículo
+    public void Modificar(View view){
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,"administracion", null, 1);
+        SQLiteDatabase BaseDeDatos = admin.getWritableDatabase();
+
+        String codigo = et_codigo.getText().toString();
+        String descripcion = et_descripcion.getText().toString();
+        String precio = et_precio.getText().toString();
+
+        if(!codigo.isEmpty() && !descripcion.isEmpty() && !precio.isEmpty()){
+
+            ContentValues registro = new ContentValues();
+            registro.put("codigo", codigo);
+            registro.put("descripcion", descripcion);
+            registro.put("precio", precio);
+
+            int cantidad = BaseDeDatos.update("articulos", registro, "codigo=" + codigo, null);
+            BaseDeDatos.close();
+
+            if(cantidad == 1){
+                Toast.makeText(this, "El artículo se ha modificado correctamente", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, "El artículo no existe", Toast.LENGTH_SHORT).show();
+            }
+
+        }else{
+            Toast.makeText(this, "Debes rellenar todos los campos", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Método para limpiar la pantalla de datos
+    public void Limpiar(View view){
+        et_codigo.setText("");
+        et_descripcion.setText("");
+        et_precio.setText("");
+    }
+
 }

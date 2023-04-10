@@ -7,4 +7,5 @@
     <string name="btn_Buscar">Buscar producto</string>
     <string name="btn_Eliminar">Eliminar producto</string>
     <string name="btn_Modificar">Modificar producto</string>
+    <string name="btn_Limpiar">Limpiar datos</string>
 </resources>
