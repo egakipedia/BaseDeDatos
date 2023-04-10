@@ -3,6 +3,7 @@ package com.example.basededatos;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     public void Registrar (View view){
         // Instanciamos la base de datos con los cuatro argumentos
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "administracion", null, 1);
-        // Abrimos la base de datos
+        // Abrimos la base de datos en modo lectura y escritura
         SQLiteDatabase BaseDeDatos = admin.getWritableDatabase();
 
         String codigo = et_codigo.getText().toString();
@@ -57,5 +58,32 @@ public class MainActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this, "Debes rellenar todos los campos", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    // Buscar artículos
+    public void Buscar (View view){
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "administracion", null, 1);
+        // Abrimos la base de datos en modo lectura y escritura
+        SQLiteDatabase BaseDeDatos = admin.getWritableDatabase();
+
+        String codigo = et_codigo.getText().toString();
+
+        if(!codigo.isEmpty()){
+            //Seleccionamos los registros con el código
+            Cursor fila = BaseDeDatos.rawQuery("select descripcion, precio from articulos where codigo =" + codigo, null);
+
+            // Revisamos si la consulta contiene valores
+            if(fila.moveToFirst()){
+                et_descripcion.setText(fila.getString(0)); //Se pone el cero por que es el primer valor que vamos a mostrar
+                et_precio.setText(fila.getString(1));
+                BaseDeDatos.close();
+            }else{
+                Toast.makeText(this, "El artículo no existe", Toast.LENGTH_SHORT).show();
+                BaseDeDatos.close();
+            }
+        }else{
+            Toast.makeText(this, "Debes introducir el código del artículo", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
