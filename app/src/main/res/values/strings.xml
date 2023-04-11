@@ -3,7 +3,7 @@
     <string name="txt_codigo">Código del producto</string>
     <string name="txt_descripcion">Descripción del producto</string>
     <string name="txt_precio">Precio del producto</string>
-    <string name="btn_registrar">Registrar producto</string>
+    <string name="btn_Registrar">Registrar producto</string>
     <string name="btn_Buscar">Buscar producto</string>
     <string name="btn_Eliminar">Eliminar producto</string>
     <string name="btn_Modificar">Modificar producto</string>
